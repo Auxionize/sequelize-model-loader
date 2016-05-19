@@ -26,7 +26,7 @@ module.exports = function(Sequelize, config, dialect, baseDir, dirs){
 
     let models = {};
     for(let dir of dirs){
-        processDir(path.join(baseDir, 'lib'));
+        processDir(path.join(baseDir, dir));
     }
 
     for(let m in models){
