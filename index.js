@@ -2,32 +2,31 @@
 let path = require('path');
 let fs = require('fs');
 
-
-function processDir(dir){
-    console.log("Models :", file);
-    fs.readdirSync(dir)
-        .filter(function (file) {
-            return file.indexOf('.') >0;
-        })
-        .forEach(function (file) {
-            console.log("Loading Model:", file);
-            var modulePath = path.join(dir, file);
-            var model = require(modulePath)(sequelize);
-            models[model.name] = model;
-        });
-}
-
-module.exports = function(Sequelize, config, dialect, dirs){
+module.exports = function(Sequelize, config, dialect, baseDir, dirs){
     let sequelize = new Sequelize(config.db.dbName, config.db.user, config.db.pass, {
         host: config.db.host,
         dialect: 'postgres',
         timestamps: true,
     });
 
+    function processDir(dir){
+        console.log("-- Models in:", dir);
+        fs.readdirSync(dir)
+            .filter(function (file) {
+                return file.indexOf('.') >0;
+            })
+            .forEach(function (file) {
+                console.log("Loading Model:", file);
+                var modulePath = path.join(dir, file);
+                var model = require(modulePath)(sequelize2);
+                models[model.name] = model;
+            });
+    }
+
 
     let models = {};
     for(let dir of dirs){
-        processDir(path.join(__dirname, 'lib'));
+        processDir(path.join(baseDir, 'lib'));
     }
 
     for(let m in models){
