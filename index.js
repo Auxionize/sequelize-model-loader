@@ -18,7 +18,7 @@ module.exports = function(Sequelize, config, dialect, baseDir, dirs){
             .forEach(function (file) {
                 console.log("Loading Model:", file);
                 var modulePath = path.join(dir, file);
-                var model = require(modulePath)(sequelize2);
+                var model = require(modulePath)(sequelize);
                 models[model.name] = model;
             });
     }
